@@ -75,7 +75,11 @@ function setup() {
 }
 
 function draw() {
-	background(220)
+	background(
+        levels[currentLevel].background.r,
+        levels[currentLevel].background.g,
+        levels[currentLevel].background.b,
+    )
 
     if (kb.pressing('left')) {
         elvio.mirror.x = false
@@ -108,8 +112,6 @@ function draw() {
             loadNewLevel()
         })
     }
-
-    
 
     xSpeed = Math.abs(xSpeed) < 0.1 ? 0 : xSpeed * 0.9
     elvio.vel.x = xSpeed

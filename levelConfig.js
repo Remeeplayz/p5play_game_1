@@ -5,6 +5,11 @@ const levels = {
         next: 'level1',
         startX: 100,
         startY: 100,
+        background: {
+            r: 250,
+            g: 200,
+            b: 200,
+        },
     },
     level1: {
         name: 'Level 1',
@@ -12,6 +17,11 @@ const levels = {
         next: 'level2',
         startX: 80,
         startY: 375,
+        background: {
+            r: 200,
+            g: 250,
+            b: 200,
+        },
     },
     level2: {
         name: 'Level 2',
@@ -19,6 +29,11 @@ const levels = {
         next: 'level3',
         startX: 80,
         startY: 375,
+        background: {
+            r: 200,
+            g: 200,
+            b: 250,
+        },
     },
     level3: {
         name: 'Level 3',
@@ -26,5 +41,10 @@ const levels = {
         next: 'level1',
         startX: 50,
         startY: 200,
+        background: {
+            r: 200,
+            g: 250,
+            b: 250,
+        },
     },
 }
