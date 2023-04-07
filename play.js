@@ -1,10 +1,13 @@
 let elvio,
-    tiles,
+    walls,
     exits,
     ladders,
+    crates,
     xSpeed = 0,
     scale = 2,
-    tileSize = 16
+    scale2 = 1.8,
+    wallsize = 16,
+    wallsize2 = 14
     currentLevel = 'level0'
 
 const drawLevel = (data) => {
@@ -19,21 +22,26 @@ const drawLevel = (data) => {
 
             const tileHeight = height / data.length
 
-            if(tileType === '1')
-                new tiles.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+            if(tileType === 'W')
+                new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize, wallsize, 'static')
 
             if(tileType === 'X')
-                new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize, wallsize, 'static')
 
             if(tileType === 'L')
-                new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize, wallsize, 'static')
+
+            if(tileType === 'B')
+                new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize2, wallsize2, 'dynamic')
         }
     })
 }
 
 const loadNewLevel = () => {    
-    tiles.removeAll()
+    walls.removeAll()
     exits.removeAll()
+    ladders.removeAll()
+    crates.removeAll()
 
     currentLevel = levels[currentLevel].next
 
@@ -46,9 +54,9 @@ const loadNewLevel = () => {
 }
 
 const setSprites = () => {
-    tiles = new Group()
-    tiles.img = './assets/Brickwall.png'
-    tiles.scale = scale
+    walls = new Group()
+    walls.img = './assets/Brickwall.png'
+    walls.scale = scale
     
     exits = new Group()
     exits.img = './assets/Exit.png'
@@ -59,11 +67,18 @@ const setSprites = () => {
     ladders.scale = scale
     ladders.layer = -100
 
+    crates = new Group()
+    crates.img = './assets/Crate.png'
+    crates.scale = scale2
+    crates.mass = 10
+    crates.friction = 5
+    crates.overlap(ladders)
+
     elvio = new Sprite()
     elvio.img = './assets/ElvioStanding.png'
-    elvio.scale = scale
-    elvio.width = 16 * scale
-    elvio.height = 27 * scale
+    elvio.scale = scale2
+    elvio.width = 16 * scale2
+    elvio.height = 27 * scale2
     elvio.maxSpeed = 2
     elvio.rotationLock = true
 }
@@ -92,7 +107,8 @@ function draw() {
         elvio.mirror.x = true
         xSpeed = xSpeed + 0.3
     }
-    if (kb.presses('up') && Math.abs(elvio.vel.y) < .2) {
+
+    if (kb.presses('up') && (elvio.overlapping(ladders) || Math.abs(elvio.vel.y) < .2)) {
         elvio.vel.y = elvio.vel.y - 5
         elvio.img = './assets/ElvioJump.png'
     }
@@ -105,7 +121,7 @@ function draw() {
         elvio.img = './assets/ElvioStanding.png'
     }
 
-    if(elvio.overlap(ladders)) console.log(elvio.overlap(ladders))
+    if(elvio.overlapping(ladders)) null
     if(exits.collides(elvio)) loadNewLevel()
 
     xSpeed = Math.abs(xSpeed) < 0.1 ? 0 : xSpeed * 0.9
