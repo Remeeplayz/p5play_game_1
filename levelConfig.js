@@ -62,7 +62,7 @@ const levels = {
     level5: {
         name: 'Level 5',
         data: mapLevel5,
-        next: 'level1',
+        next: 'level6',
         startX: 80,
         startY: 375,
         background: {
@@ -74,6 +74,54 @@ const levels = {
     level6: {
         name: 'Level 6',
         data: mapLevel6,
+        next: 'level7',
+        startX: 80,
+        startY: 375,
+        background: {
+            r: 200,
+            g: 250,
+            b: 250,
+        },
+    },
+    level7: {
+        name: 'Level 7',
+        data: mapLevel7,
+        next: 'level8',
+        startX: 80,
+        startY: 375,
+        background: {
+            r: 200,
+            g: 250,
+            b: 250,
+        },
+    },
+    level8: {
+        name: 'Level 8',
+        data: mapLevel8,
+        next: 'level9',
+        startX: 80,
+        startY: 375,
+        background: {
+            r: 200,
+            g: 250,
+            b: 250,
+        },
+    },
+    level9: {
+        name: 'Level 9',
+        data: mapLevel9,
+        next: 'level10',
+        startX: 80,
+        startY: 375,
+        background: {
+            r: 200,
+            g: 250,
+            b: 250,
+        },
+    },
+    level10: {
+        name: 'Level 10',
+        data: mapLevel10,
         next: 'level1',
         startX: 80,
         startY: 375,
