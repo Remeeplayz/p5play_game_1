@@ -5,9 +5,9 @@ let elvio,
     crates,
     xSpeed = 0,
     scale = 2,
-    scale2 = 1.8,
-    wallsize = 16,
-    wallsize2 = 14
+    smallScale = 1.8,
+    tileSize = 16,
+    smallTileSize = 14
     currentLevel = 'level0'
 
 const drawLevel = (data) => {
@@ -23,16 +23,16 @@ const drawLevel = (data) => {
             const tileHeight = height / data.length
 
             if(tileType === 'W')
-                new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize, wallsize, 'static')
+                new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
 
             if(tileType === 'X')
-                new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize, wallsize, 'static')
+                new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
 
             if(tileType === 'L')
-                new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize, wallsize, 'static')
+                new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
 
             if(tileType === 'B')
-                new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, wallsize2, wallsize2, 'dynamic')
+                new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, smallTileSize, smallTileSize, 'dynamic')
         }
     })
 }
@@ -69,16 +69,16 @@ const setSprites = () => {
 
     crates = new Group()
     crates.img = './assets/Crate.png'
-    crates.scale = scale2
+    crates.scale = smallScale
     crates.mass = 10
     crates.friction = 5
     crates.overlap(ladders)
 
     elvio = new Sprite()
     elvio.img = './assets/ElvioStanding.png'
-    elvio.scale = scale2
-    elvio.width = 16 * scale2
-    elvio.height = 27 * scale2
+    elvio.scale = smallScale
+    elvio.width = 16 * smallScale
+    elvio.height = 27 * smallScale
     elvio.maxSpeed = 2
     elvio.rotationLock = true
 }
