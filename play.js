@@ -41,8 +41,14 @@ const drawLevel = (data) => {
 
 const loadNewLevel = () => {
     if(exiting) return
-    tiles.forEach((tile) => tile.remove())
-    exits.forEach((exit) => exit.remove())
+    tiles.forEach((tile) => {
+        tile.remove()
+    })
+    exits.forEach((exit) => {
+        exit.remove()
+    })
+    tiles = []
+    exits = []
     exiting = true
 
     currentLevel = levels[currentLevel].next
