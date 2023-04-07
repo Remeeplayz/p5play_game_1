@@ -2,7 +2,7 @@ const levels = {
     level0: {
         name: 'Level 0',
         data: [],
-        next: 'level6',
+        next: 'level1',
         startX: 100,
         startY: 100,
         background: {

@@ -5,7 +5,36 @@ let elvio,
     xSpeed = 0,
     ySpeed = 0,
     scale = 2,
+    tileSize = 16 * scale
     currentLevel = 'level0'
+
+// const drawLevel = (data) => {
+//     tiles = new Group()
+//     tiles.w = tileSize;
+// 	tiles.h = tileSize;
+// 	tiles.tile = '1'
+//     tiles.img = './assets/Brickwall.png'
+//     tiles.collider = 'static'
+//     tiles.scale = scale
+//     tiles.stroke = 'red'
+
+//     exits = new Group()
+//     exits.w = tileSize;
+// 	exits.h = tileSize;
+// 	exits.tile = 'X'
+//     exits.img = './assets/Exit.png'
+//     exits.collider = 'static'
+//     exits.scale = scale
+//     tiles.stroke = 'red'
+
+//     new Tiles(
+// 		data,
+// 		tileSize / 2,
+// 		tileSize / 2,
+// 		tiles.w,
+// 		tiles.h
+// 	)
+// }
 
 const drawLevel = (data) => {
     let tileNo = 0
@@ -41,14 +70,11 @@ const drawLevel = (data) => {
 
 const loadNewLevel = () => {
     if(exiting) return
-    tiles.forEach((tile) => {
-        tile.remove()
-    })
-    exits.forEach((exit) => {
-        exit.remove()
-    })
-    tiles = []
-    exits = []
+    console.log(exits)
+    // tiles.removeAll()
+    // exits.removeAll()
+    // tiles = []
+    // exits = []
     exiting = true
 
     currentLevel = levels[currentLevel].next
@@ -68,6 +94,7 @@ function setup() {
     elvio.scale = scale
     elvio.width = 16 * scale
     elvio.height = 27 * scale
+    // elvio.debug = true
 
     world.gravity.y = 10
 
