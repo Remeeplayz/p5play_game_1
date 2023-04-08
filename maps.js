@@ -4,16 +4,16 @@ const mapLevel1 = [
     'W.....B.....B......W',
     'W..................X',
     'W..................X',
-    'W..........WWWWWWWWW',
+    'W..........FFFFFFFFF',
     'W..........W.......W',
     'W..........W.......W',
     'W..........W...B...W',
     'W......B...W.......W',
-    'W...LWWWWWWW.......W',
+    'W...LFFFFFFF.......W',
     'W...L..............W',
-    'WWW.L..............W',
+    'WFF.L..............W',
     'W...L..............W',
-    'WWWWWWWWWWWWWWWWWWWW',
+    'WFFFFFFFFFFFFFFFFFFW',
 ]
 
 const mapLevel2 = [

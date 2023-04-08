@@ -3,6 +3,7 @@ let elvio,
     exits,
     ladders,
     crates,
+    floors,
     xSpeed = 0,
     scale = 2,
     smallScale = 1.8,
@@ -33,8 +34,15 @@ const drawLevel = (data) => {
 
             if(tileType === 'B')
                 new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, smallTileSize, smallTileSize, 'dynamic')
-        }
+        
+            if(tileType === 'F')
+                new floors.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+            }
     })
+}
+
+const canJump = () => {
+    return !!elvio.colliding(floors) || !!elvio.colliding(crates)
 }
 
 const loadNewLevel = () => {    
@@ -42,6 +50,7 @@ const loadNewLevel = () => {
     exits.removeAll()
     ladders.removeAll()
     crates.removeAll()
+    floors.removeAll()
 
     currentLevel = levels[currentLevel].next
 
@@ -57,6 +66,7 @@ const setSprites = () => {
     walls = new Group()
     walls.img = './assets/Brickwall.png'
     walls.scale = scale
+    walls.friction = 0
     
     exits = new Group()
     exits.img = './assets/Exit.png'
@@ -67,12 +77,15 @@ const setSprites = () => {
     ladders.scale = scale
     ladders.layer = -100
 
+    floors = new Group()
+    floors.img = './assets/Floor.png'
+    floors.scale = scale
+
     crates = new Group()
     crates.img = './assets/Crate.png'
     crates.scale = smallScale
     crates.mass = 10
     crates.friction = 5
-    crates.overlap(ladders)
 
     elvio = new Sprite()
     elvio.img = './assets/ElvioStanding.png'
@@ -81,6 +94,9 @@ const setSprites = () => {
     elvio.height = 27 * smallScale
     elvio.maxSpeed = 2
     elvio.rotationLock = true
+
+    elvio.overlap(ladders)
+    crates.overlap(ladders)
 }
 
 function setup() {
@@ -108,7 +124,7 @@ function draw() {
         xSpeed = xSpeed + 0.3
     }
 
-    if (kb.presses('up') && (elvio.overlapping(ladders) || Math.abs(elvio.vel.y) < .2)) {
+    if (kb.presses('up') && canJump()) {
         elvio.vel.y = elvio.vel.y - 5
         elvio.img = './assets/ElvioJump.png'
     }
@@ -121,7 +137,6 @@ function draw() {
         elvio.img = './assets/ElvioStanding.png'
     }
 
-    if(elvio.overlapping(ladders)) null
     if(exits.collides(elvio)) loadNewLevel()
 
     xSpeed = Math.abs(xSpeed) < 0.1 ? 0 : xSpeed * 0.9
