@@ -42,7 +42,7 @@ const drawLevel = (data) => {
 }
 
 const canJump = () => {
-    return !!elvio.colliding(floors) || !!elvio.colliding(crates)
+    return (!!elvio.colliding(floors) || !!elvio.colliding(crates)) && !elvio.overlapping(ladders)
 }
 
 const loadNewLevel = () => {    
@@ -125,6 +125,11 @@ function draw() {
     }
 
     if (kb.presses('up') && canJump()) {
+        elvio.vel.y = elvio.vel.y - 5
+        elvio.img = './assets/ElvioJump.png'
+    }
+
+    if (kb.presses('up') && elvio.overlapping(ladders)) {
         elvio.vel.y = elvio.vel.y - 5
         elvio.img = './assets/ElvioJump.png'
     }
