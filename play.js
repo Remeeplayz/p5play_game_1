@@ -4,6 +4,7 @@ let elvio,
     ladders,
     crates,
     floors,
+    back,
     xSpeed = 0,
     scale = 2,
     smallScale = 1.8,
@@ -25,6 +26,9 @@ const drawLevel = (data) => {
 
             if(tileType === 'W')
                 new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+
+            if(tileType === 'P')
+                new back.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
 
             if(tileType === 'X')
                 new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
@@ -51,6 +55,7 @@ const loadNewLevel = () => {
     ladders.removeAll()
     crates.removeAll()
     floors.removeAll()
+    back.removeAll()
 
     currentLevel = levels[currentLevel].next
 
@@ -71,6 +76,10 @@ const setSprites = () => {
     exits = new Group()
     exits.img = './assets/Exit.png'
     exits.scale = scale
+    
+    back = new Group()
+    back.img = './assets/Prev.png'
+    back.scale = scale
 
     ladders = new Group()
     ladders.img = './assets/Ladder.png'
@@ -143,6 +152,7 @@ function draw() {
     }
 
     if(exits.collides(elvio)) loadNewLevel()
+    if(back.collides(elvio)) loadNewLevel()
 
     xSpeed = Math.abs(xSpeed) < 0.1 ? 0 : xSpeed * 0.9
     elvio.vel.x = xSpeed
