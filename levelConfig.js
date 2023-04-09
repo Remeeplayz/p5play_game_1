@@ -10,6 +10,13 @@ const levels = {
             g: 200,
             b: 200,
         },
+        exits: [
+            {
+                next: 'level1',
+                x: 0,
+                y: 0,
+            }
+        ],
     },
     level1: {
         name: 'Level 1',
@@ -22,6 +29,13 @@ const levels = {
             g: 250,
             b: 200,
         },
+        exits: [
+            {
+                next: 'level2',
+                x: 20,
+                y: 14,
+            },
+        ],
     },
     level2: {
         name: 'Level 2',
@@ -34,6 +48,7 @@ const levels = {
             g: 200,
             b: 250,
         },
+        exits: [],
     },
     level3: {
         name: 'Level 3',
@@ -46,6 +61,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level4: {
         name: 'Level 4',
@@ -58,6 +74,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level5: {
         name: 'Level 5',
@@ -70,6 +87,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level6: {
         name: 'Level 6',
@@ -82,6 +100,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level7: {
         name: 'Level 7',
@@ -94,6 +113,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level8: {
         name: 'Level 8',
@@ -106,6 +126,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level9: {
         name: 'Level 9',
@@ -118,6 +139,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level10: {
         name: 'Level 10',
@@ -130,6 +152,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level11: {
         name: 'Level 11',
@@ -142,6 +165,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level12: {
         name: 'Level 12',
@@ -154,6 +178,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level13: {
         name: 'Level 13',
@@ -166,6 +191,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level14: {
         name: 'Level 14',
@@ -178,6 +204,7 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
     level15: {
         name: 'Level 15',
@@ -190,5 +217,6 @@ const levels = {
             g: 250,
             b: 250,
         },
+        exits: [],
     },
 }

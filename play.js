@@ -4,7 +4,6 @@ let player,
     ladders,
     crates,
     floors,
-    back,
     xSpeed = 0,
     scale = 2,
     smallScale = 1.8,
@@ -13,17 +12,16 @@ let player,
     currentLevel = 'level0'
 
 const maxSpeed = 2
+const tileWidth = 32, tileHeight = 32
 
-const drawLevel = (data) => {
+const drawLevel = () => {
     console.log(`** Drawing level ${levels[currentLevel].name}`)
     window.document.getElementById('current-level').innerHTML = levels[currentLevel].name
 
+    const data = levels[currentLevel].data
     data.forEach((line, j) => {
-        const tileWidth = width / line.length
-
         for (let i = 0; i < line.length; i++) {
             const tileType = line.charAt(i)
-            const tileHeight = height / data.length
 
             switch (tileType) {
                 case '.':
@@ -33,31 +31,28 @@ const drawLevel = (data) => {
                     new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
                     break
 
-                case 'P':
-                    new back.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
-                    break
-
-                case 'X':
-                    new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
-                    break
-
                 case 'L':
                     new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
                     break
 
                 case 'B':
-                    new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'dynamic')
                     break
 
                 case 'F':
                     new floors.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
                     break
 
-            
                 default:
                     break;
             }
         }
+    })
+
+    const exitPoints = levels[currentLevel].exits
+    exitPoints.forEach((exit, i) => {
+        const newExit = new exits.Sprite(exit.x * tileWidth + tileWidth / 2, exit.y * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+        newExit.exitId = i
     })
 }
 
@@ -65,17 +60,16 @@ const canJump = () => {
     return (!!player.colliding(floors) || !!player.colliding(crates)) && !player.overlapping(ladders)
 }
 
-const loadNewLevel = () => {    
+const loadNewLevel = (exit) => {    
     walls.removeAll()
     exits.removeAll()
     ladders.removeAll()
     crates.removeAll()
     floors.removeAll()
-    back.removeAll()
 
-    currentLevel = levels[currentLevel].next
+    currentLevel = levels[currentLevel].exits[exit].next
 
-    drawLevel(levels[currentLevel].data)
+    drawLevel()
 
     player.x = levels[currentLevel].startX
     player.y = levels[currentLevel].startY
@@ -92,10 +86,6 @@ const setSprites = () => {
     exits = new Group()
     exits.img = './assets/Exit.png'
     exits.scale = scale
-    
-    back = new Group()
-    back.img = './assets/Prev.png'
-    back.scale = scale
 
     ladders = new Group()
     ladders.img = './assets/Ladder.png'
@@ -109,8 +99,8 @@ const setSprites = () => {
     crates = new Group()
     crates.img = './assets/Crate.png'
     crates.scale = smallScale
-    crates.mass = 10
-    crates.friction = 5
+    crates.mass = 1
+    crates.friction = 1
 
     player = new Sprite()
     player.img = './assets/ElvioStanding.png'
@@ -122,6 +112,10 @@ const setSprites = () => {
 
     player.overlap(ladders)
     crates.overlap(ladders)
+
+    exits.collides(player, (exit) => {
+        loadNewLevel(exit.exitId)
+    })
 }
 
 function setup() {
@@ -130,7 +124,7 @@ function setup() {
     world.gravity.y = 10
 
     setSprites()
-    loadNewLevel()
+    loadNewLevel(0)
 }
 
 function draw() {
@@ -166,7 +160,4 @@ function draw() {
     if(player.vel.x === 0) {
         player.img = './assets/ElvioStanding.png'
     }
-
-    if(exits.collides(player)) loadNewLevel()
-    if(back.collides(player)) loadNewLevel()
 }
