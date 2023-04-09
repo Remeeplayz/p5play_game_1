@@ -14,6 +14,7 @@ let elvio,
 
 const drawLevel = (data) => {
     console.log(`** Drawing level ${levels[currentLevel].name}`)
+    window.document.getElementById('current-level').innerHTML = levels[currentLevel].name
 
     data.forEach((line, j) => {
         const tileWidth = width / line.length
