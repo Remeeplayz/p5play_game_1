@@ -4,15 +4,14 @@ let player,
     ladders,
     crates,
     floors,
-    xSpeed = 0,
-    scale = 2,
-    smallScale = 1.8,
-    tileSize = 16,
-    smallTileSize = 14,
     currentLevel = 'level0'
 
-const maxSpeed = 2
-const tileWidth = 32, tileHeight = 32
+const MAX_SPEED = 2,
+    TILE_SIZE = 16,
+    CRATE_SIZE = 14,
+    TILE_WIDTH = 16,
+    TILE_HEIGHT = 15,
+    CRATE_SCALE = 0.9
 
 const drawLevel = () => {
     console.log(`** Drawing level ${levels[currentLevel].name}`)
@@ -28,19 +27,19 @@ const drawLevel = () => {
                     continue
 
                 case 'W':
-                    new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    new walls.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_SIZE, TILE_SIZE, 'static')
                     break
 
                 case 'L':
-                    new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    new ladders.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_SIZE, TILE_SIZE, 'static')
                     break
 
                 case 'B':
-                    new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'dynamic')
+                    new crates.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, CRATE_SIZE, CRATE_SIZE, 'dynamic')
                     break
 
                 case 'F':
-                    new floors.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    new floors.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_SIZE, TILE_SIZE, 'static')
                     break
 
                 default:
@@ -51,7 +50,7 @@ const drawLevel = () => {
 
     const exitPoints = levels[currentLevel].exits
     exitPoints.forEach((exit, i) => {
-        const newExit = new exits.Sprite(exit.x * tileWidth + tileWidth / 2, exit.y * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+        const newExit = new exits.Sprite(exit.x * TILE_WIDTH + TILE_WIDTH / 2, exit.y * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT, 'static')
         newExit.exitId = i
     })
 }
@@ -80,35 +79,31 @@ const loadNewLevel = (exit) => {
 const setSprites = () => {
     walls = new Group()
     walls.img = './assets/Brickwall.png'
-    walls.scale = scale
     walls.friction = 0
     
     exits = new Group()
     exits.img = './assets/Exit.png'
-    exits.scale = scale
 
     ladders = new Group()
     ladders.img = './assets/Ladder.png'
-    ladders.scale = scale
     ladders.layer = -100
 
     floors = new Group()
     floors.img = './assets/Floor.png'
-    floors.scale = scale
 
     crates = new Group()
     crates.img = './assets/Crate.png'
-    crates.scale = smallScale
-    crates.mass = 1
-    crates.friction = 1
+    // crates.debug = true
 
     player = new Sprite()
     player.img = './assets/ElvioStanding.png'
-    player.scale = smallScale
-    player.width = 16 * smallScale
-    player.height = 27 * smallScale
-    player.maxSpeed = 2
+    player.width = 14
+    player.height = 24
     player.rotationLock = true
+    player.update = () => {
+        if(!player.overlapping(ladders)) return
+        player.vel.y = -0.17
+    }
 
     player.overlap(ladders)
     crates.overlap(ladders)
@@ -119,7 +114,7 @@ const setSprites = () => {
 }
 
 function setup() {
-    new Canvas(640, 480)
+    new Canvas(320, 240, "pixelated x2")
 
     world.gravity.y = 10
 
@@ -136,21 +131,26 @@ function draw() {
 
     if (kb.pressing('left')) {
         player.mirror.x = false
-        player.vel.x = player.vel.x < -maxSpeed ? -maxSpeed : player.vel.x - 0.3
+        player.vel.x = player.vel.x < -MAX_SPEED ? -MAX_SPEED : player.vel.x - 0.3
     }
     if (kb.pressing('right')) {
         player.mirror.x = true
-        player.vel.x = player.vel.x > maxSpeed ? maxSpeed : player.vel.x + 0.3
+        player.vel.x = player.vel.x > MAX_SPEED ? MAX_SPEED : player.vel.x + 0.3
     }
 
     if (kb.presses('up') && canJump()) {
-        player.vel.y = player.vel.y - 5
+        player.vel.y = player.vel.y - 4
         player.img = './assets/ElvioJump.png'
     }
 
     if (kb.presses('up') && player.overlapping(ladders)) {
-        player.vel.y = player.vel.y - 5
         player.img = './assets/ElvioJump.png'
+        player.y = player.y - 10
+    }
+
+    if (kb.presses('down') && player.overlapping(ladders)) {
+        player.img = './assets/ElvioJump.png'
+        player.y = player.y + 10
     }
 
     if(player.vel.x < 0.1 || player.vel.x > .1) {
@@ -160,4 +160,6 @@ function draw() {
     if(player.vel.x === 0) {
         player.img = './assets/ElvioStanding.png'
     }
+
+    player.vel.x = Math.abs(player.vel.x) < 0.1 ? 0 : player.vel.x * 0.9
 }

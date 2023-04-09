@@ -3,7 +3,7 @@ const levels = {
         name: 'Level 0',
         data: [],
         next: 'level1',
-        startX: 100,
+        startX: 40,
         startY: 100,
         background: {
             r: 250,
@@ -22,8 +22,8 @@ const levels = {
         name: 'Level 1',
         data: mapLevel1,
         next: 'level2',
-        startX: 80,
-        startY: 375,
+        startX: 40,
+        startY: 100,
         background: {
             r: 200,
             g: 250,
@@ -41,14 +41,25 @@ const levels = {
         name: 'Level 2',
         data: mapLevel2,
         next: 'level3',
-        startX: 80,
-        startY: 375,
+        startX: 40,
+        startY: 180,
         background: {
             r: 200,
             g: 200,
             b: 250,
         },
-        exits: [],
+        exits: [
+          {
+            next: 'level3',
+            x: 20,
+            y: 8,
+          },
+          {
+            next: 'level1',
+            x: -1,
+            y: 12,
+        },
+        ],
     },
     level3: {
         name: 'Level 3',
@@ -61,7 +72,13 @@ const levels = {
             g: 250,
             b: 250,
         },
-        exits: [],
+        exits: [
+         {
+            next: 'level4',
+            x: 11,
+            y: 5,
+         },
+       ],
     },
     level4: {
         name: 'Level 4',
@@ -74,7 +91,13 @@ const levels = {
             g: 250,
             b: 250,
         },
-        exits: [],
+        exits: [
+            {
+                next: 'level5',
+                x: 20,
+                y: 14,
+            },
+        ],
     },
     level5: {
         name: 'Level 5',
@@ -87,7 +110,13 @@ const levels = {
             g: 250,
             b: 250,
         },
-        exits: [],
+        exits: [
+            {
+                next: 'level2',
+                x: 3,
+                y: 5,
+            },
+        ],
     },
     level6: {
         name: 'Level 6',
@@ -100,7 +129,13 @@ const levels = {
             g: 250,
             b: 250,
         },
-        exits: [],
+        exits: [
+            {
+                next: 'level7',
+                x: 3,
+                y: 5,
+            },
+        ],
     },
     level7: {
         name: 'Level 7',
