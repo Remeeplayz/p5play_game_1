@@ -1,4 +1,4 @@
-let elvio,
+let player,
     walls,
     exits,
     ladders,
@@ -9,8 +9,10 @@ let elvio,
     scale = 2,
     smallScale = 1.8,
     tileSize = 16,
-    smallTileSize = 14
+    smallTileSize = 14,
     currentLevel = 'level0'
+
+const maxSpeed = 2
 
 const drawLevel = (data) => {
     console.log(`** Drawing level ${levels[currentLevel].name}`)
@@ -21,33 +23,46 @@ const drawLevel = (data) => {
 
         for (let i = 0; i < line.length; i++) {
             const tileType = line.charAt(i)
-            if(tileType === '.') continue
-
             const tileHeight = height / data.length
 
-            if(tileType === 'W')
-                new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+            switch (tileType) {
+                case '.':
+                    continue
 
-            if(tileType === 'P')
-                new back.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                case 'W':
+                    new walls.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    break
 
-            if(tileType === 'X')
-                new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                case 'P':
+                    new back.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    break
 
-            if(tileType === 'L')
-                new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                case 'X':
+                    new exits.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    break
 
-            if(tileType === 'B')
-                new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, smallTileSize, smallTileSize, 'dynamic')
-        
-            if(tileType === 'F')
-                new floors.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                case 'L':
+                    new ladders.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    break
+
+                case 'B':
+                    new crates.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    break
+
+                case 'F':
+                    new floors.Sprite(i * tileWidth + tileWidth / 2, j * tileHeight + tileHeight / 2, tileSize, tileSize, 'static')
+                    break
+
+            
+                default:
+                    break;
             }
+        }
     })
 }
 
 const canJump = () => {
-    return (!!elvio.colliding(floors) || !!elvio.colliding(crates)) && !elvio.overlapping(ladders)
+    return (!!player.colliding(floors) || !!player.colliding(crates)) && !player.overlapping(ladders)
 }
 
 const loadNewLevel = () => {    
@@ -62,10 +77,10 @@ const loadNewLevel = () => {
 
     drawLevel(levels[currentLevel].data)
 
-    elvio.x = levels[currentLevel].startX
-    elvio.y = levels[currentLevel].startY
-    elvio.vel.x = 0
-    elvio.vel.y = 0
+    player.x = levels[currentLevel].startX
+    player.y = levels[currentLevel].startY
+    player.vel.x = 0
+    player.vel.y = 0
 }
 
 const setSprites = () => {
@@ -97,15 +112,15 @@ const setSprites = () => {
     crates.mass = 10
     crates.friction = 5
 
-    elvio = new Sprite()
-    elvio.img = './assets/ElvioStanding.png'
-    elvio.scale = smallScale
-    elvio.width = 16 * smallScale
-    elvio.height = 27 * smallScale
-    elvio.maxSpeed = 2
-    elvio.rotationLock = true
+    player = new Sprite()
+    player.img = './assets/ElvioStanding.png'
+    player.scale = smallScale
+    player.width = 16 * smallScale
+    player.height = 27 * smallScale
+    player.maxSpeed = 2
+    player.rotationLock = true
 
-    elvio.overlap(ladders)
+    player.overlap(ladders)
     crates.overlap(ladders)
 }
 
@@ -126,35 +141,32 @@ function draw() {
     )
 
     if (kb.pressing('left')) {
-        elvio.mirror.x = false
-        xSpeed = xSpeed - 0.3
+        player.mirror.x = false
+        player.vel.x = player.vel.x < -maxSpeed ? -maxSpeed : player.vel.x - 0.3
     }
     if (kb.pressing('right')) {
-        elvio.mirror.x = true
-        xSpeed = xSpeed + 0.3
+        player.mirror.x = true
+        player.vel.x = player.vel.x > maxSpeed ? maxSpeed : player.vel.x + 0.3
     }
 
     if (kb.presses('up') && canJump()) {
-        elvio.vel.y = elvio.vel.y - 5
-        elvio.img = './assets/ElvioJump.png'
+        player.vel.y = player.vel.y - 5
+        player.img = './assets/ElvioJump.png'
     }
 
-    if (kb.presses('up') && elvio.overlapping(ladders)) {
-        elvio.vel.y = elvio.vel.y - 5
-        elvio.img = './assets/ElvioJump.png'
+    if (kb.presses('up') && player.overlapping(ladders)) {
+        player.vel.y = player.vel.y - 5
+        player.img = './assets/ElvioJump.png'
     }
 
-    if(xSpeed < .1 || xSpeed > .1) {
-        elvio.img = './assets/ElvioRuning.png'
+    if(player.vel.x < 0.1 || player.vel.x > .1) {
+        player.img = './assets/ElvioRuning.png'
     }
 
-    if(xSpeed === 0) {
-        elvio.img = './assets/ElvioStanding.png'
+    if(player.vel.x === 0) {
+        player.img = './assets/ElvioStanding.png'
     }
 
-    if(exits.collides(elvio)) loadNewLevel()
-    if(back.collides(elvio)) loadNewLevel()
-
-    xSpeed = Math.abs(xSpeed) < 0.1 ? 0 : xSpeed * 0.9
-    elvio.vel.x = xSpeed
+    if(exits.collides(player)) loadNewLevel()
+    if(back.collides(player)) loadNewLevel()
 }
