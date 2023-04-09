@@ -80,6 +80,7 @@ const setSprites = () => {
     walls = new Group()
     walls.img = './assets/Brickwall.png'
     walls.friction = 0
+    walls.bounciness = 0
     
     exits = new Group()
     exits.img = './assets/Exit.png'
@@ -90,6 +91,7 @@ const setSprites = () => {
 
     floors = new Group()
     floors.img = './assets/Floor.png'
+    floors.bounciness = 0
 
     crates = new Group()
     crates.img = './assets/Crate.png'
@@ -100,6 +102,10 @@ const setSprites = () => {
     player.width = 14
     player.height = 24
     player.rotationLock = true
+    player.bounciness = 0
+    player.x.offset = 2
+    // player.debug = true
+
     player.update = () => {
         if(!player.overlapping(ladders)) return
         player.vel.y = -0.17
