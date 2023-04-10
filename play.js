@@ -92,18 +92,16 @@ const setSprites = () => {
     floors = new Group()
     floors.img = './assets/Floor.png'
     floors.bounciness = 0
+    // floors.debug = true
 
     crates = new Group()
     crates.img = './assets/Crate.png'
-    // crates.debug = true
 
     player = new Sprite()
     player.img = './assets/ElvioStanding.png'
     player.width = 14
     player.height = 24
-    player.rotationLock = true
     player.bounciness = 0
-    player.x.offset = 2
     // player.debug = true
 
     player.update = () => {
@@ -113,6 +111,7 @@ const setSprites = () => {
 
     player.overlap(ladders)
     crates.overlap(ladders)
+    floors.overlap(floors)
 
     exits.collides(player, (exit) => {
         loadNewLevel(exit.exitId)
@@ -139,6 +138,7 @@ function draw() {
         player.mirror.x = false
         player.vel.x = player.vel.x < -MAX_SPEED ? -MAX_SPEED : player.vel.x - 0.3
     }
+
     if (kb.pressing('right')) {
         player.mirror.x = true
         player.vel.x = player.vel.x > MAX_SPEED ? MAX_SPEED : player.vel.x + 0.3
@@ -168,4 +168,5 @@ function draw() {
     }
 
     player.vel.x = Math.abs(player.vel.x) < 0.1 ? 0 : player.vel.x * 0.9
+    player.rotation = 0
 }
