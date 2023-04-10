@@ -171,6 +171,4 @@ function draw() {
 
     player.vel.x = Math.abs(player.vel.x) < 0.1 ? 0 : player.vel.x * 0.9
     player.rotation = 0
-
-    console.log(player.x, player.y)
 }
