@@ -56,7 +56,9 @@ const drawLevel = () => {
 }
 
 const canJump = () => {
-    return (!!player.colliding(floors) || !!player.colliding(crates)) && !player.overlapping(ladders)
+    const canJumpFrom = !!player.colliding(floors) || !!player.colliding(crates)
+    const cannotJump = !player.overlapping(ladders)
+    return canJumpFrom && cannotJump
 }
 
 const loadNewLevel = (exit) => {    

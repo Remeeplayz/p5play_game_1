@@ -43,7 +43,7 @@ const mapLevel3 = [
     'W..................W',
     'W..................W',
     'W..................W',
-    'W..........FFFFF...W',
+    'W........FFFFFFF...W',
     'W..................W',
     '..................FW',
     '................FF.W',
@@ -67,9 +67,9 @@ const mapLevel4 = [
     'W..............FW..W',
     'W...............W..W',
     '................W..W',
-    '..............FFW..X',
-    'WFF.............W..X',
-    'WFFFFFFFFFFFFFFFFFFW',
+    '..............FFW...',
+    'WFF.............W...',
+    'WFFFFFFFFFFFFFFFFFFF',
 ]
 
 const mapLevel5 = [
@@ -92,8 +92,8 @@ const mapLevel5 = [
 
 const mapLevel6 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WXX................W',
-    'WXX................W',
+    'W..................W',
+    'W..................W',
     'WFFFFFFFFFFFFFF....W',
     'W.................FW',
     'W................F.W',
@@ -110,8 +110,8 @@ const mapLevel6 = [
 
 const mapLevel7 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WXX................W',
-    'WXX................W',
+    'W..................W',
+    'W..................W',
     'W..................W',
     'W..................W',
     'WF.................W',
@@ -128,8 +128,8 @@ const mapLevel7 = [
 
 const mapLevel8 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WXX................W',
-    'WXX................W',
+    'W..................W',
+    'W..................W',
     'WFFFFFF.F...F.F....W',
     'W.................FW',
     'W................F.W',
@@ -146,8 +146,8 @@ const mapLevel8 = [
 
 const mapLevel9 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WXX................W',
-    'WXX................W',
+    'W..................W',
+    'W..................W',
     'WFFFFFFFFFFFFFF....W',
     'W.................FW',
     'W................F.W',
@@ -164,8 +164,8 @@ const mapLevel9 = [
 
 const mapLevel10 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WX...........B.....W',
-    'WX...........B.....W',
+    'W............B.....W',
+    'W............B.....W',
     'WFFFF.FFFFFFFFF....W',
     'W.................FW',
     'W................F.W',
@@ -189,7 +189,7 @@ const mapLevel11 = [
     'W..W.............F.W',
     'W..W............F..W',
     'W..W..........F....W',
-    'WXXW...............W',
+    'W..W...............W',
     'WWW.......F........W',
     'W..................W',
     '.......F...........W',
@@ -200,8 +200,8 @@ const mapLevel11 = [
 
 const mapLevel12 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'X..................W',
-    'X..................W',
+    '...................W',
+    '...................W',
     'WFWL...............W',
     'W..L.F.............W',
     'W..L...............W',
@@ -218,8 +218,8 @@ const mapLevel12 = [
 
 const mapLevel13 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WX.................W',
-    'WX.................W',
+    'W..................W',
+    'W..................W',
     'WFFFFFFFFFFFFFF....W',
     'W.................FW',
     'W................F.W',
@@ -236,8 +236,8 @@ const mapLevel13 = [
 
 const mapLevel14 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WX...........B.....W',
-    'WX...........B.....W',
+    'W............B.....W',
+    'W............B.....W',
     'WFFFF.FFFFFFFFF....W',
     'W.................FW',
     'W................F.W',
@@ -254,8 +254,8 @@ const mapLevel14 = [
 
 const mapLevel15 = [
     'WWWWWWWWWWWWWWWWWWWW',
-    'WX...........B.....W',
-    'WX...........B.....W',
+    'W............B.....W',
+    'W............B.....W',
     'WFFFF.FFFFFFFFF....W',
     'W.................FW',
     'W................F.W',
