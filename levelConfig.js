@@ -10,9 +10,9 @@ const levels = {
         },
         exits: [
             {
-                next: 'level2',
+                next: 'level1',
                 pos: { x: 0, y: 0 },
-                start: {x: 40, y: 210 },
+                start: {x: 20, y: 210 },
             }
         ],
     },
