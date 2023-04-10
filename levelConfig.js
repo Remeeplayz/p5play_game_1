@@ -3,8 +3,6 @@ const levels = {
         name: 'Level 0',
         data: [],
         next: 'level1',
-        startX: 40,
-        startY: 100,
         background: {
             r: 250,
             g: 200,
@@ -12,9 +10,9 @@ const levels = {
         },
         exits: [
             {
-                next: 'level1',
-                x: 0,
-                y: 0,
+                next: 'level2',
+                pos: { x: 0, y: 0 },
+                start: {x: 40, y: 210 },
             }
         ],
     },
@@ -22,8 +20,6 @@ const levels = {
         name: 'Level 1',
         data: mapLevel1,
         next: 'level2',
-        startX: 40,
-        startY: 100,
         background: {
             r: 200,
             g: 250,
@@ -32,8 +28,8 @@ const levels = {
         exits: [
             {
                 next: 'level2',
-                x: 20,
-                y: 14,
+                pos: { x: 20, y: 14 },
+                start: {x: 16, y: 210 },
             },
         ],
     },
@@ -41,8 +37,6 @@ const levels = {
         name: 'Level 2',
         data: mapLevel2,
         next: 'level3',
-        startX: 40,
-        startY: 180,
         background: {
             r: 200,
             g: 200,
@@ -51,13 +45,13 @@ const levels = {
         exits: [
           {
             next: 'level3',
-            x: 20,
-            y: 8,
+            pos: { x: 20, y: 8 },
+            start: {x: 10, y: 135 },
           },
           {
             next: 'level1',
-            x: -1,
-            y: 12,
+            pos: { x: -1, y: 14 },
+            start: {x: 310, y: 210 },
         },
         ],
     },
@@ -65,8 +59,6 @@ const levels = {
         name: 'Level 3',
         data: mapLevel3,
         next: 'level4',
-        startX: 80,
-        startY: 375,
         background: {
             r: 200,
             g: 250,
@@ -74,9 +66,14 @@ const levels = {
         },
         exits: [
          {
+            next: 'level2',
+            pos: { x: -1, y: 9 },
+            start: {x: 310, y: 135 },
+         },
+         {
             next: 'level4',
-            x: 11,
-            y: 5,
+            pos: { x: 11, y: 5 },
+            start: {x: 310, y: 210 },
          },
        ],
     },
@@ -94,8 +91,8 @@ const levels = {
         exits: [
             {
                 next: 'level5',
-                x: 20,
-                y: 14,
+                pos: { x: 20, y: 14 },
+                start: {x: 310, y: 210 },
             },
         ],
     },

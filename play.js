@@ -50,7 +50,7 @@ const drawLevel = () => {
 
     const exitPoints = levels[currentLevel].exits
     exitPoints.forEach((exit, i) => {
-        const newExit = new exits.Sprite(exit.x * TILE_WIDTH + TILE_WIDTH / 2, exit.y * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT, 'static')
+        const newExit = new exits.Sprite(exit.pos.x * TILE_WIDTH + TILE_WIDTH / 2, exit.pos.y * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_WIDTH, TILE_HEIGHT, 'static')
         newExit.exitId = i
     })
 }
@@ -66,12 +66,14 @@ const loadNewLevel = (exit) => {
     crates.removeAll()
     floors.removeAll()
 
-    currentLevel = levels[currentLevel].exits[exit].next
+    const exitDetails = levels[currentLevel].exits[exit]
+
+    currentLevel = exitDetails.next
 
     drawLevel()
 
-    player.x = levels[currentLevel].startX
-    player.y = levels[currentLevel].startY
+    player.x = exitDetails.start.x
+    player.y = exitDetails.start.y
     player.vel.x = 0
     player.vel.y = 0
 }
@@ -169,4 +171,6 @@ function draw() {
 
     player.vel.x = Math.abs(player.vel.x) < 0.1 ? 0 : player.vel.x * 0.9
     player.rotation = 0
+
+    console.log(player.x, player.y)
 }
