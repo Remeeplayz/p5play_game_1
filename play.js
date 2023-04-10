@@ -4,6 +4,7 @@ let player,
     ladders,
     crates,
     floors,
+    fires,
     currentLevel = 'level0'
 
 const MAX_SPEED = 2,
@@ -42,8 +43,12 @@ const drawLevel = () => {
                     new floors.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_SIZE, TILE_SIZE, 'static')
                     break
 
+                case 'f':
+                    const fire = new fires.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_SIZE, TILE_SIZE, 'static')
+                    break
+
                 default:
-                    break;
+                    break
             }
         }
     })
@@ -67,6 +72,7 @@ const loadNewLevel = (exit) => {
     ladders.removeAll()
     crates.removeAll()
     floors.removeAll()
+    fires.removeAll()
 
     const exitDetails = levels[currentLevel].exits[exit]
 
@@ -80,7 +86,7 @@ const loadNewLevel = (exit) => {
     player.vel.y = 0
 }
 
-const setSprites = () => {
+function preload() {
     walls = new Group()
     walls.img = './assets/Brickwall.png'
     walls.friction = 0
@@ -96,17 +102,18 @@ const setSprites = () => {
     floors = new Group()
     floors.img = './assets/Floor.png'
     floors.bounciness = 0
-    // floors.debug = true
 
     crates = new Group()
     crates.img = './assets/Crate.png'
+
+	fires = new Group()
+    fires.layer = 100
 
     player = new Sprite()
     player.img = './assets/ElvioStanding.png'
     player.width = 14
     player.height = 24
     player.bounciness = 0
-    // player.debug = true
 
     player.update = () => {
         if(!player.overlapping(ladders)) return
@@ -114,6 +121,7 @@ const setSprites = () => {
     }
 
     player.overlap(ladders)
+    player.overlap(fires)
     crates.overlap(ladders)
     floors.overlap(floors)
 
@@ -127,7 +135,6 @@ function setup() {
 
     world.gravity.y = 10
 
-    setSprites()
     loadNewLevel(0)
 }
 
