@@ -108,6 +108,8 @@ function preload() {
 
 	fires = new Group()
     fires.layer = 100
+    fires.addAni('./assets/Fire1.png', 4)
+    fires.anis.frameDelay = 8
 
     player = new Sprite()
     player.img = './assets/ElvioStanding.png'
