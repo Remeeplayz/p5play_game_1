@@ -4,6 +4,7 @@ let player,
     ladders,
     crates,
     floors,
+    floorsActive,
     fires,
     currentLevel = 'level0'
 
@@ -40,6 +41,7 @@ const drawLevel = () => {
                     break
 
                 case 'F':
+                    new floorsActive.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + 1, TILE_WIDTH - 2, 4, 'static')
                     new floors.Sprite(i * TILE_WIDTH + TILE_WIDTH / 2, j * TILE_HEIGHT + TILE_HEIGHT / 2, TILE_SIZE, TILE_SIZE, 'static')
                     break
 
@@ -61,7 +63,7 @@ const drawLevel = () => {
 }
 
 const canJump = () => {
-    const canJumpFrom = !!player.colliding(floors) || !!player.colliding(crates)
+    const canJumpFrom = !!player.colliding(floorsActive) || !!player.colliding(crates)
     const cannotJump = !player.overlapping(ladders)
     return canJumpFrom && cannotJump
 }
@@ -72,6 +74,7 @@ const loadNewLevel = (exit) => {
     ladders.removeAll()
     crates.removeAll()
     floors.removeAll()
+    floorsActive.removeAll()
     fires.removeAll()
 
     const exitDetails = levels[currentLevel].exits[exit]
@@ -102,6 +105,11 @@ function preload() {
     floors = new Group()
     floors.img = './assets/Floor.png'
     floors.bounciness = 0
+    
+    floorsActive = new Group()
+    floorsActive.fill = '#ffffff00'
+    floorsActive.stroke = '#ffffff00'
+    floorsActive.bounciness = 0
 
     crates = new Group()
     crates.img = './assets/Crate.png'
@@ -125,7 +133,7 @@ function preload() {
     player.overlap(ladders)
     player.overlap(fires)
     crates.overlap(ladders)
-    floors.overlap(floors)
+    floors.overlap(floorsActive)
 
     exits.collides(player, (exit) => {
         loadNewLevel(exit.exitId)
